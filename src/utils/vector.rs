@@ -1,4 +1,6 @@
 use std::ops;
+use rand::Rng;
+use super::random_f32;
 
 #[derive(Copy, Clone)]
 /// # `Vector3`
@@ -62,6 +64,37 @@ impl Vector3 {
             x: self.x / norm,
             y: self.y / norm,
             z: self.z / norm
+        }
+    }
+
+    /// # `random`
+    /// Creates a `Vector3` with components of random size in range [0, 1)
+    pub fn random() -> Vector3 {
+        Vector3 {
+            x: random_f32(),
+            y: random_f32(),
+            z: random_f32()
+        }
+    }
+
+    /// # `random_bounded`
+    /// Creates a `Vector3` with components of random size in given range as `f32` range [min, max]
+    pub fn random_bounded(min: f32, max: f32) -> Vector3 {
+        let mut rng = rand::thread_rng();
+        Vector3 {
+            x: rng.gen_range(min..max),
+            y: rng.gen_range(min..max),
+            z: rng.gen_range(min..max)
+        }
+    }
+
+    /// # `random_in_unit_sphere`
+    /// Creates a random `Vector3` that is within a unit circle
+    pub fn random_in_unit_sphere() -> Vector3 {
+        loop {
+            let vect = Vector3::random_bounded(-1.0, 1.0);
+            if vect.norm_squared() >= 1.0 {continue;}
+            return vect;
         }
     }
 }
@@ -137,9 +170,53 @@ impl ops::Neg<> for Vector3 {
 
     fn neg(self) -> Self {
         Vector3 {
-            x: self.x,
-            y: self.y,
-            z: self.z
+            x: -self.x,
+            y: -self.y,
+            z: -self.z
+        }
+    }
+}
+
+// Vector3 += Vector3
+impl ops::AddAssign for Vector3 {
+    fn add_assign(&mut self, _rhs: Self) {
+        *self = Self {
+            x: self.x + _rhs.x,
+            y: self.y + _rhs.y,
+            z: self.z + _rhs.z
+        }
+    }
+}
+
+// Vector3 -= Vector3
+impl ops::SubAssign for Vector3 {
+    fn sub_assign(&mut self, _rhs: Self) {
+        *self = Self {
+            x: self.x - _rhs.x,
+            y: self.y - _rhs.y,
+            z: self.z - _rhs.z
+        }
+    }
+}
+
+// Vector3 *= Scalar `f32`
+impl ops::MulAssign<f32> for Vector3 {
+    fn mul_assign(&mut self, _rhs: f32) {
+        *self = Vector3 {
+            x: self.x * _rhs,
+            y: self.y * _rhs,
+            z: self.z * _rhs
+        }
+    }
+}
+
+// Vector3 /= Scalar `f32`
+impl ops::DivAssign<f32> for Vector3 {
+    fn div_assign(&mut self, _rhs: f32) {
+        *self = Vector3 {
+            x: self.x / _rhs,
+            y: self.y / _rhs,
+            z: self.z / _rhs
         }
     }
 }

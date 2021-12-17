@@ -1,4 +1,4 @@
-use crate::utils::{Vector3, Colour, INFINITY};
+use crate::utils::{Vector3, Colour, INFINITY, ORIGIN};
 use super::objects::{Object, World, HitRecord};
 
 /// # `Ray`
@@ -26,14 +26,19 @@ impl Ray {
 
     /// # `colour`
     /// Returns the colour of the ray based on the way it was traced
-    pub fn colour(&self, world: &World) -> Colour {
+    pub fn colour(ray: &Ray, world: &World, depth: usize) -> Colour {
         let mut hit_rec = HitRecord::new_empty();
 
-        if world.hit(&self, 0.0, INFINITY, &mut hit_rec) {
-            return 0.5 * (hit_rec.normal + Vector3::new(1.0, 1.0, 1.0))
+        if depth <= 0 {
+            return ORIGIN; // black colour
         }
 
-        let unit_dir = self.direction.unit();
+        if world.hit(ray, 0.001, INFINITY, &mut hit_rec) {
+            let target = hit_rec.origin + hit_rec.normal + Vector3::random_in_unit_sphere();
+            return 0.5 * Ray::colour(&Ray::new(hit_rec.origin, target - hit_rec.origin), &world, depth - 1);
+        }
+
+        let unit_dir = ray.direction.unit();
         let t = 0.5 * (unit_dir.y + 1.0);
         (1.0 - t)*Colour::new(1.0, 1.0, 1.0) + t * Colour::new(0.5, 0.7, 1.0)
     }

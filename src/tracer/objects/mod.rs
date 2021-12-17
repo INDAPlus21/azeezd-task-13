@@ -1,9 +1,9 @@
 use super::Ray;
-use crate::utils::{Vector3};
+use crate::utils::{Vector3, ORIGIN};
 
 #[derive(Copy, Clone)]
 /// # `HitRecord`
-/// Structure that holds the 
+/// Structure that holds the informatiom about hit object, its normal and orientation
 pub struct HitRecord {
     pub origin: Vector3,
     pub normal: Vector3,
@@ -12,8 +12,10 @@ pub struct HitRecord {
 }
 
 impl HitRecord {
+    /// # `new_empty`
+    /// Creates a new empty HitRecord
     pub fn new_empty() -> HitRecord {
-        let empty_vec = Vector3::new(0.0, 0.0, 0.0);
+        let empty_vec = ORIGIN;
         HitRecord {
             origin: empty_vec,
             normal: empty_vec,
@@ -22,6 +24,8 @@ impl HitRecord {
         }
     }
 
+    /// # `face_normal`
+    /// Changes the HitRecord's information about if the ray hit from outside the object or inside
     pub fn face_normal(&mut self, ray: &Ray, out_normal: &Vector3) {
         self.front_face = out_normal.dot(ray.direction) < 0.0;
         self.normal = if self.front_face {*out_normal} else {-*out_normal};
