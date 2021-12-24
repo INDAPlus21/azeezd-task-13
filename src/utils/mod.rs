@@ -4,7 +4,7 @@ mod vector;
 mod image;
 
 pub const ASPECT_RATIO : f32 = 16.0 / 9.0;
-pub const IMG_WIDTH : usize = 400;
+pub const IMG_WIDTH : usize = 800;
 pub const IMG_HEIGHT : usize = (IMG_WIDTH as f32 / ASPECT_RATIO) as usize;
 pub const VIEWPORT_HEIGHT : f32 = 2.0;
 pub const VIEWPORT_WIDTH : f32 = ASPECT_RATIO * VIEWPORT_HEIGHT;
@@ -18,6 +18,9 @@ pub const ORIGIN: Vector3 = Vector3 {x: 0.0, y: 0.0, z: 0.0};
 pub const X_UNIT: Vector3 = Vector3 {x: 1.0, y: 0.0, z: 0.0};
 pub const Y_UNIT: Vector3 = Vector3 {x: 0.0, y: 1.0, z: 0.0};
 pub const Z_UNIT: Vector3 = Vector3 {x: 0.0, y: 0.0, z: 1.0};
+
+// small value
+pub const EPSILON: f32 = 1.0e-8;
 
 
 pub use self::{

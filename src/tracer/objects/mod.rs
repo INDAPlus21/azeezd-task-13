@@ -1,4 +1,4 @@
-use super::Ray;
+use super::{Ray, Material};
 use crate::utils::{Vector3, ORIGIN};
 
 #[derive(Copy, Clone)]
@@ -7,6 +7,7 @@ use crate::utils::{Vector3, ORIGIN};
 pub struct HitRecord {
     pub origin: Vector3,
     pub normal: Vector3,
+    pub material: Option<Material>,
     pub t: f32,
     pub front_face: bool
 }
@@ -19,6 +20,7 @@ impl HitRecord {
         HitRecord {
             origin: empty_vec,
             normal: empty_vec,
+            material: None,
             t: 0.0,
             front_face: false
         }

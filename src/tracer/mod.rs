@@ -2,12 +2,17 @@ mod ray;
 mod camera;
 mod objects;
 mod window;
+mod materials;
 
 pub use self::{
     ray::Ray,
     camera::Camera,
     objects::{
-        World, Sphere
+        World, Sphere, HitRecord
     },
-    window::Window
+    window::Window,
+    materials::{
+        Material,
+        MaterialType
+    }
 };

@@ -34,8 +34,15 @@ impl Ray {
         }
 
         if world.hit(ray, 0.001, INFINITY, &mut hit_rec) {
-            let target = hit_rec.origin + hit_rec.normal + Vector3::random_in_unit_sphere();
-            return 0.5 * Ray::colour(&Ray::new(hit_rec.origin, target - hit_rec.origin), &world, depth - 1);
+            let mut scattered = Ray::new(ORIGIN, ORIGIN);
+            let mut colour = ORIGIN;
+
+            if hit_rec.material.unwrap().scatter(ray, &mut hit_rec, &mut colour, &mut scattered) {
+                return colour * Ray::colour(&scattered, world, depth - 1);
+            }
+            
+
+            return ORIGIN;
         }
 
         let unit_dir = ray.direction.unit();

@@ -1,6 +1,6 @@
 use std::ops;
 use rand::Rng;
-use super::random_f32;
+use super::{random_f32, EPSILON};
 
 #[derive(Copy, Clone)]
 /// # `Vector3`
@@ -97,6 +97,29 @@ impl Vector3 {
             return vect;
         }
     }
+
+    /// # `near_zero`
+    /// Returns true if vector is very close to zero
+    pub fn near_zero(&self) -> bool {
+        self.x.abs() < EPSILON && self.y < EPSILON && self.z < EPSILON
+    }
+
+    /// # `refract`
+    /// Returns the refraction of this vector as `Vector3` using Snell's Law of Refraction and
+    /// using the given normal vector `Vector3` and the index of refraction as `f32`.
+    pub fn refract(&self, normal: Vector3, index: f32) -> Vector3 {
+        let cos_theta = (-*self).dot(normal).min(1.0);
+        let ray_perp = index * (*self + cos_theta * normal);
+        let ray_paral = - ((1.0 - ray_perp.norm_squared()).abs()).sqrt() * normal;
+
+        ray_perp + ray_paral
+    }
+
+    /// # `reflect`
+    /// Returns a reflection of this `Vector3` around a given normal `Vector3`
+    pub fn reflect(&self, normal: Vector3) -> Vector3 {
+        *self - (2.0 * (*self).dot(normal)) * normal
+    }
 }
 
 // Vector + Vector
@@ -147,6 +170,19 @@ impl ops::Mul<Vector3> for f32 {
             x: self * _rhs.x,
             y: self * _rhs.y,
             z: self * _rhs.z
+        }
+    }
+}
+
+// Vector * Vector (component * component)
+impl ops::Mul<Vector3> for Vector3 {
+    type Output = Vector3; 
+
+    fn mul(self, _rhs: Vector3) -> Vector3 {
+        Vector3 {
+            x: self.x * _rhs.x,
+            y: self.y * _rhs.y,
+            z: self.z * _rhs.z
         }
     }
 }

@@ -1,20 +1,22 @@
 use crate::utils::Vector3;
-use super::{Object, Ray, HitRecord};
+use super::{Object, Ray, HitRecord, Material};
 
 /// # `Sphere`
 /// A good ol' Sphere with a center and a radius
 pub struct Sphere {
     pub center: Vector3,
-    pub radius: f32
+    pub radius: f32,
+    pub material: Material
 }
 
 impl Sphere {
     /// # `new`
     /// Creates a new sphere using the given center as `Vector3` and radius as `f32`
-    pub fn new(center: Vector3, radius: f32) -> Box<dyn Object> {
+    pub fn new(center: Vector3, radius: f32, material: Material) -> Box<dyn Object> {
         Box::new ( Sphere {
             center: center,
-            radius: radius
+            radius: radius,
+            material: material
         } )
     }
 }
@@ -48,6 +50,7 @@ impl Object for Sphere {
         hit_record.origin = ray.at(hit_record.t);
         let normal = (hit_record.origin - self.center) / self.radius;
         hit_record.face_normal(ray, &normal);
+        hit_record.material = Some(self.material);
 
         return true;
     }
