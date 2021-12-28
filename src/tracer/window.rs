@@ -1,7 +1,7 @@
 extern crate minifb;
 use minifb::{Key, Window as MFBWindow, WindowOptions};
 use super::{objects::World, Camera};
-use crate::utils::{IMG_WIDTH, IMG_HEIGHT, Vector3, VIEWPORT_WIDTH, VIEWPORT_HEIGHT, FOCAL_LENGTH, ORIGIN};
+use crate::utils::{IMG_WIDTH, IMG_HEIGHT, Vector3, VIEWPORT_WIDTH, VIEWPORT_HEIGHT, FOCAL_LENGTH, ORIGIN, ASPECT_RATIO};
 
 /// # `window`
 /// Holds the minifb buffer `Vec<u32>`, minifb window `Window` and camera `Camera`. Used to display the ray tracing on a window
@@ -19,7 +19,7 @@ impl Window {
         Window {
             buffer: vec![0; IMG_WIDTH * IMG_HEIGHT],
             window: MFBWindow::new("Ray Tracer", IMG_WIDTH, IMG_HEIGHT, WindowOptions::default()).unwrap(),
-            camera: Camera::new(ORIGIN, VIEWPORT_WIDTH, VIEWPORT_HEIGHT, FOCAL_LENGTH)
+            camera: Camera::new(Vector3::new(-2.0, 2.0, 1.0), Vector3::new(0.0, 0.0, -1.0), 90.0, ASPECT_RATIO)
         }
     }
 

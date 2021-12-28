@@ -1,4 +1,4 @@
-use crate::utils::{Vector3, Image, IMG_WIDTH, IMG_HEIGHT, BOUNCE_AMOUNT, Colour, ORIGIN, SAMPLES, SAMPLE_SCALE, random_f32};
+use crate::utils::{Vector3, Image, IMG_WIDTH, IMG_HEIGHT, BOUNCE_AMOUNT, Colour, ORIGIN, SAMPLES, SAMPLE_SCALE, random_f32, FOCAL_LENGTH, Y_UNIT};
 use super::ray::Ray;
 use super::objects::{World, Sphere};
 extern crate minifb;
@@ -16,14 +16,24 @@ pub struct Camera {
 impl Camera {
     /// # `new`
     /// Creates a new Camera by taking its origin as `Vector3`, width and height of the viewport, both as `f32` and the focal length as `f32`
-    pub fn new(origin: Vector3, width: f32, height: f32, focal_length: f32) -> Camera {
-        let horizontal = Vector3::new(width, 0.0, 0.0);
-        let vertical = Vector3::new(0.0, height, 0.0);
+    pub fn new(from: Vector3, at: Vector3, vertical_fov: f32, aspect_ratio: f32) -> Camera {
+        let theta = vertical_fov.to_radians();
+        let height = (theta * 0.5).tan();
+        let viewport_height = 2.0 * height;
+        let viewport_width = aspect_ratio * viewport_height;
+
+        let w = (from - at).unit();
+        let u = Y_UNIT.cross(w).unit(); // Y_UNIT is viewport's up direction
+        let v = w.cross(u);
+
+        let horizontal =  viewport_width * u;
+        let vertical =  viewport_height * v;
+
         Camera {
-            origin: origin,
+            origin: from,
             horizontal: horizontal,
             vertical: vertical,
-            lower_left_corner: origin - horizontal / 2.0 - vertical / 2.0 - Vector3::new(0.0, 0.0, focal_length),
+            lower_left_corner: from - horizontal / 2.0 - vertical / 2.0 - w,
             image: Image::new(IMG_WIDTH, IMG_HEIGHT)
         }
     }
