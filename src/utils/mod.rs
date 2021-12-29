@@ -10,7 +10,7 @@ pub const VIEWPORT_HEIGHT : f32 = 2.0;
 pub const VIEWPORT_WIDTH : f32 = ASPECT_RATIO * VIEWPORT_HEIGHT;
 pub const FOCAL_LENGTH : f32 = 1.0;
 pub const BOUNCE_AMOUNT : usize = 10;
-pub const SAMPLES : usize = 100;
+pub const SAMPLES : usize = 1000;
 pub const SAMPLE_SCALE : f32 = 1.0 / SAMPLES as f32;
 
 pub const INFINITY: f32 = std::f32::INFINITY;

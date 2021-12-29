@@ -33,16 +33,20 @@ impl Ray {
             return ORIGIN; // black colour
         }
 
-        if world.hit(ray, 0.001, INFINITY, &mut hit_rec) {
+        if !world.hit(ray, 0.001, INFINITY, &mut hit_rec) {
+            return world.background;
+        }
+        {
             let mut scattered = Ray::new(ORIGIN, ORIGIN);
             let mut colour = ORIGIN;
+            let emitted = hit_rec.material.unwrap().emit();
 
-            if hit_rec.material.unwrap().scatter(ray, &mut hit_rec, &mut colour, &mut scattered) {
-                return colour * Ray::colour(&scattered, world, depth - 1);
+            if !hit_rec.material.unwrap().scatter(ray, &mut hit_rec, &mut colour, &mut scattered) {
+                return emitted;
             }
             
 
-            return ORIGIN;
+            return emitted + colour * Ray::colour(&scattered, world, depth - 1);
         }
 
         let unit_dir = ray.direction.unit();

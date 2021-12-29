@@ -1,11 +1,12 @@
 use super::*;
-use crate::utils::{Colour, Vector3, random_f32};
+use crate::utils::{Colour, Vector3, random_f32, ORIGIN};
 
 #[derive(Copy, Clone)]
 pub enum MaterialType {
     Lambertian,
     Metal(f32),
-    Dielectric(f32)
+    Dielectric(f32),
+    DiffuseLight
 }
 
 #[derive(Copy, Clone)]
@@ -26,7 +27,15 @@ impl Material {
         match self.material_type {
             MaterialType::Lambertian => self.lambertian(ray, hit_record, attenuation, scattered),
             MaterialType::Metal(fuzz) => self.metal(ray, hit_record, attenuation, fuzz, scattered),
-            MaterialType::Dielectric(refrac_idx) => self.dielectric(ray, hit_record, attenuation, refrac_idx, scattered)
+            MaterialType::Dielectric(refrac_idx) => self.dielectric(ray, hit_record, attenuation, refrac_idx, scattered),
+            MaterialType::DiffuseLight => {false}
+        }
+    }
+
+    pub fn emit(&self) -> Colour {
+        match self.material_type {
+            MaterialType::DiffuseLight => self.colour,
+            _ => ORIGIN // Black
         }
     }
 

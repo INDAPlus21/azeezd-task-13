@@ -1,9 +1,11 @@
 use super::{Object, HitRecord, Ray};
+use crate::utils::{Colour, ORIGIN};
 
 /// # `World`
 /// The entire world that is rendered. Holds a vector of objects that are hit by the rays
 pub struct World {
     pub objects: Vec<Box<dyn Object>>,
+    pub background: Colour
 }
 
 impl World {
@@ -11,7 +13,8 @@ impl World {
     /// Creates an empty world (duh)
     pub fn new_empty() -> World {
         World {
-            objects: Vec::new()
+            objects: Vec::new(),
+            background: ORIGIN // black background
         }
     }
 }
