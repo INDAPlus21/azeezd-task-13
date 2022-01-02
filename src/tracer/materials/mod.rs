@@ -40,7 +40,7 @@ impl Material {
     }
 
     fn lambertian(&self, ray: &Ray, hit_record: &HitRecord, attenuation: &mut Colour, scattered: &mut Ray) -> bool {
-        let mut scatter_direction = hit_record.normal + Vector3::random().unit();
+        let mut scatter_direction = hit_record.normal + Vector3::random_in_unit_sphere().unit();
 
         if scatter_direction.near_zero() {
             scatter_direction = hit_record.normal;

@@ -44,8 +44,13 @@ pub trait Object {
 
 mod sphere;
 mod world;
+mod rectangle;
 
 pub use self::{
     sphere::Sphere,
-    world::World
+    world::World,
+    rectangle::{
+        Axis,
+        Rectangle
+    }
 };

@@ -8,7 +8,7 @@ pub use self::{
     ray::Ray,
     camera::Camera,
     objects::{
-        World, Sphere, HitRecord
+        World, Sphere, HitRecord, Rectangle, Axis
     },
     window::Window,
     materials::{
