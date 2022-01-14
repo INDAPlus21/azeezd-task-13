@@ -2,7 +2,7 @@ use std::ops;
 use rand::Rng;
 use super::{random_f32, EPSILON};
 
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Debug)]
 /// # `Vector3`
 /// Vector in 3-dimensional space. Includes algebraic functions such as dot, cross, norm
 pub struct Vector3 {
@@ -89,13 +89,24 @@ impl Vector3 {
     }
 
     /// # `random_in_unit_sphere`
-    /// Creates a random `Vector3` that is within a unit circle
+    /// Creates a random `Vector3` that is within a unit Sphere
     pub fn random_in_unit_sphere() -> Vector3 {
         loop {
             let vect = Vector3::random_bounded(-1.0, 1.0);
             if vect.norm_squared() >= 1.0 {continue;}
             return vect;
         }
+    }
+
+    /// # `random_in_hemisphere`
+    /// Generates a random `Vector3` that is with an a hemisphere of a unit radius
+    pub fn random_in_hemisphere(normal: &Vector3) -> Vector3 {
+        let in_unit_sphere = Self::random_in_unit_sphere();
+
+        if in_unit_sphere.dot(*normal) > 0.0 {
+            return in_unit_sphere
+        }
+        -in_unit_sphere
     }
 
     /// # `near_zero`
@@ -119,6 +130,15 @@ impl Vector3 {
     /// Returns a reflection of this `Vector3` around a given normal `Vector3`
     pub fn reflect(&self, normal: Vector3) -> Vector3 {
         *self - (2.0 * (*self).dot(normal)) * normal
+    }
+
+    /// # `from_vec`
+    /// Returns an `Option<Vector3>` using a given `Vec<f32>` of length 3
+    pub fn from_vec(vector: Vec<f32>) -> Option<Vector3> {
+        match vector.len() {
+            3 => {Some(Vector3::new(vector[0], vector[1], vector[2]))},
+            _ => None
+        }
     }
 }
 

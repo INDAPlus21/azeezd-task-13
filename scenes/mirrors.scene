@@ -1,0 +1,20 @@
+CAM     0 0 -1      0 0 1   90
+
+MAT gold metal 0.8 0.8 0.4 0.5
+MAT whiteWall lambertian 0.9 0.9 0.9
+MAT rWall lambertian 0.9 0.4 0.4
+MAT lWall lambertian 0.4 0.9 0.4
+MAT glass dielectric 0.4 0.4 1.0 1.5
+MAT light light 2 2 2
+MAT mirror metal 1.0 1.0 1.0 0
+
+OBJ rect mirror xy -1 1 -1 1 1
+OBJ rect mirror xy -1 1 -1 1 -1
+OBJ rect lWall yz -1 1 -1 1 1
+OBJ rect rWall yz -1 1 -1 1 -1
+OBJ rect whiteWall xz -1 1 -1 1 1
+OBJ rect whiteWall xz -1 1 -1 1 -1
+OBJ rect light xz -0.6 0.6 -0.6 0.6 0.999
+
+OBJ sphere gold 0.4 -0.7 0.5 0.3
+OBJ sphere glass -0.4 -0.7 0.3 0.3

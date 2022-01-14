@@ -1,4 +1,4 @@
-use crate::utils::{Vector3, Colour, INFINITY, ORIGIN};
+use crate::utils::{Vector3, Colour, INFINITY, ORIGIN, EPSILON};
 use super::objects::{Object, World, HitRecord};
 
 /// # `Ray`
@@ -33,7 +33,7 @@ impl Ray {
             return ORIGIN; // black colour
         }
 
-        if !world.hit(ray, 0.001, INFINITY, &mut hit_rec) {
+        if !world.hit(ray, EPSILON, INFINITY, &mut hit_rec) {
             return world.background;
         }
         {
@@ -47,6 +47,14 @@ impl Ray {
             
 
             return emitted + colour * Ray::colour(&scattered, world, depth - 1);
+        }
+    }
+
+    pub fn fast_colour(ray: &Ray, world: &World) -> Colour {
+        let mut hit_rec = HitRecord::new_empty();
+
+        if world.hit(ray, EPSILON, INFINITY, &mut hit_rec) {
+            return 0.5 * (hit_rec.normal + Colour::new(1.0, 1.0, 1.0))
         }
 
         let unit_dir = ray.direction.unit();

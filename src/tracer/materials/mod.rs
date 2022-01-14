@@ -11,8 +11,8 @@ pub enum MaterialType {
 
 #[derive(Copy, Clone)]
 pub struct Material {
-    colour: Colour,
-    material_type: MaterialType
+    pub colour: Colour,
+    pub material_type: MaterialType
 }
 
 impl Material {
@@ -40,7 +40,7 @@ impl Material {
     }
 
     fn lambertian(&self, ray: &Ray, hit_record: &HitRecord, attenuation: &mut Colour, scattered: &mut Ray) -> bool {
-        let mut scatter_direction = hit_record.normal + Vector3::random_in_unit_sphere().unit();
+        let mut scatter_direction = hit_record.normal + Vector3::random_in_hemisphere(&hit_record.normal).unit();
 
         if scatter_direction.near_zero() {
             scatter_direction = hit_record.normal;
