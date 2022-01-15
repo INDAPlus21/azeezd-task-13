@@ -1,6 +1,8 @@
 # Azeez Daoud - Ray Tracer
 Based on tutorial by Peter Shirley [Ray Tracer in One Weekend](https://raytracing.github.io/)
 
+![preview](/images/materials.png)
+
 # Running
 Rendering can be done by running 
 
