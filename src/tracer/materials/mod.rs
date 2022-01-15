@@ -1,6 +1,8 @@
 use super::*;
 use crate::utils::{Colour, Vector3, random_f32, ORIGIN};
 
+/// # `MaterialType`
+/// Enum type to specify the Material type used and their extra values (fuzziness or index of refraction)
 #[derive(Copy, Clone)]
 pub enum MaterialType {
     Lambertian,
@@ -9,6 +11,8 @@ pub enum MaterialType {
     DiffuseLight
 }
 
+/// # `Material`
+/// Struct that handles the colour and material type for an object
 #[derive(Copy, Clone)]
 pub struct Material {
     pub colour: Colour,
@@ -16,6 +20,8 @@ pub struct Material {
 }
 
 impl Material {
+    /// # `new`
+    /// Creates a new material by giving its `Colour` and `MaterialType`
     pub fn new(colour: Colour, material_type: MaterialType) -> Material {
         Material {
             colour: colour,
@@ -23,6 +29,8 @@ impl Material {
         }
     }
 
+    /// # `scatter`
+    /// Returns if the ray hits the object and modifies given data to caluclate how the ray scatters afterwards (if it does)
     pub fn scatter(&self, ray: &Ray, hit_record: &HitRecord, attenuation: &mut Colour, scattered: &mut Ray) -> bool {
         match self.material_type {
             MaterialType::Lambertian => self.lambertian(ray, hit_record, attenuation, scattered),
@@ -32,6 +40,8 @@ impl Material {
         }
     }
 
+    /// # `emit`
+    /// Returns the colour of emission of this material (only for DiffuseLight materials)
     pub fn emit(&self) -> Colour {
         match self.material_type {
             MaterialType::DiffuseLight => self.colour,
@@ -39,7 +49,10 @@ impl Material {
         }
     }
 
-    fn lambertian(&self, ray: &Ray, hit_record: &HitRecord, attenuation: &mut Colour, scattered: &mut Ray) -> bool {
+    
+    // === CALCULATIONS OF HOW DIFFERENT MATERIALS HANDLES THE RAY ===
+
+    fn lambertian(&self, _ray: &Ray, hit_record: &HitRecord, attenuation: &mut Colour, scattered: &mut Ray) -> bool {
         let mut scatter_direction = hit_record.normal + Vector3::random_in_hemisphere(&hit_record.normal).unit();
 
         if scatter_direction.near_zero() {

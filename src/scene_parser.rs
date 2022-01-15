@@ -3,13 +3,17 @@ use crate::utils::{Colour, Vector3, ASPECT_RATIO, ORIGIN, Z_UNIT};
 use rand::Rng;
 use std::{collections::HashMap, fs};
 
+/// # `Parser`
+/// A struct that reads and parses a .scene file and generates the `World` and `Camera` specificed by the file
 pub struct Parser {
-    pub file_path: String,
+    file_path: String,
     pub world: World,
     pub camera: Camera
 }
 
 impl Parser {
+    /// `new`
+    /// Initialises the parser by taking the .scene file path
     pub fn new(file_path: &String) -> Parser {
         Parser {
             file_path: file_path.to_string(),
@@ -17,9 +21,15 @@ impl Parser {
             camera: Camera::new(ORIGIN, Z_UNIT, 90.0, ASPECT_RATIO)
         }
     }
+
+    /// `parse`
+    /// Parses the file given to the Parser. This changes the Parser's `World` and `Camera` fields into the data given in the file
     pub fn parse(&mut self) {
+
         self.world = World::new_empty();
         let mut materials: HashMap<String, Material> = HashMap::new();
+
+        // Read file
         match fs::read_to_string(&self.file_path) {
             Ok(_text) => {
                 let lines: Vec<String> = _text
@@ -28,8 +38,9 @@ impl Parser {
                     .filter(|_line| _line.len() > 0)
                     .collect();
 
-                let mut big_loop_idx: usize = 0;
-                let mut in_loop_idx: usize = 0;
+                let mut big_loop_idx: usize = 0; // Line by line loop
+                let mut in_loop_idx: usize = 0; // Inner loops are ones induced by the ~ command
+
                 while big_loop_idx < lines.len() {
                     let _line = lines.get(big_loop_idx).unwrap();
                     let data: Vec<String> = _line
@@ -61,8 +72,10 @@ impl Parser {
                             in_loop_idx = data[1].parse::<usize>().unwrap();
                             big_loop_idx += 1;
                         }
-                        _ => {}
+                        "//" => {} 
+                        _ => {panic!("Unknown command: \"{}\"", _line)}
                     }
+                    // If there is a ~ loop active then reduce the counter and repeat the same line until the counter is zero
                     if in_loop_idx > 0 {
                         in_loop_idx -= 1;
                     } else {
@@ -77,17 +90,22 @@ impl Parser {
         }
     }
 
+    /// # `parse_cam`
+    /// Parses the camera data given as `Vec<String>` and returns a Camera with the given settings
     fn parse_cam(data: &Vec<String>) -> Camera {
         let data: Vec<f32> = data[1..]
             .iter()
             .map(|_val| Self::get_val(_val.to_string()))
             .collect::<Vec<f32>>();
+        
         let from = Vector3::new(data[0], data[1], data[2]);
         let to = Vector3::new(data[3], data[4], data[5]);
         let fov = data[6];
         Camera::new(from, to, fov, ASPECT_RATIO)
     }
 
+    /// # `parse_sphere`
+    /// Parses the sphere data given as `Vec<String>`. Also takes the `World` struct and `HashMap<String, Material>` to add the sphere into the world
     fn parse_sphere(
         data: &Vec<String>,
         world: &mut World,
@@ -110,6 +128,8 @@ impl Parser {
         ));
     }
 
+    /// # `parse_rect`
+    /// Parses the rectangle data given as `Vec<String>`. Also takes the `World` struct and `HashMap<String, Material>` to add the rectangle into the world
     fn parse_rect(
         data: &Vec<String>,
         world: &mut World,
@@ -146,6 +166,8 @@ impl Parser {
         ));
     }
 
+    /// # `parse_mat`
+    /// Parses the material data given as `Vec<String>` and returns the material and its variable name as `(String, Material)`
     fn parse_mat(data: &Vec<String>) -> (String, Material) {
         let colour: Colour = Colour::from_vec(
             data[3..6]
@@ -155,6 +177,7 @@ impl Parser {
         )
         .unwrap();
 
+        // Fuzziness or index of refraction
         let extra_val = match data.get(6) {
             Some(e) => Self::get_val(e.to_string()),
             _ => 1.0,
@@ -174,6 +197,8 @@ impl Parser {
         (name, Material::new(colour, mat_type))
     }
 
+    /// # `get_val`
+    /// Takes a `String` and parses it to f32. If the format `x_y` is given then a random f32 is generated in the range `[x, y]`
     fn get_val(value: String) -> f32 {
         let vals: Vec<f32> = value
             .split('_')

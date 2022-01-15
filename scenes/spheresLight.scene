@@ -1,14 +1,14 @@
 CAM     0 1 -1    0 0 1    100
 
 MAT ground lambertian 0.8 0.8 0.8 0.8
-MAT lamp light 1 3 3
-MAT lamp light 3 3 1
+MAT lamp1 light 1 3 3
+MAT lamp2 light 3 3 1
 MAT glass dielectric 1 1 1 1.5
 
 OBJ rect ground xz -50 50 -50 50 -1
 OBJ rect ground xy -50 50 -50 50 5
-OBJ sphere lamp 5 5 1 3
-OBJ sphere lamp -5 5 1 3
+OBJ sphere lamp1 5 5 1 3
+OBJ sphere lamp2 -5 5 1 3
 
 ~ 5
 OBJ sphere glass -4_4 -0.7 0_3 0.3

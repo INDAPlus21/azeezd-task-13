@@ -1,4 +1,4 @@
-use crate::utils::{Vector3, Image, IMG_WIDTH, IMG_HEIGHT, BOUNCE_AMOUNT, Colour, ORIGIN, random_f32, Y_UNIT};
+use crate::utils::{Vector3, Image, IMG_WIDTH, IMG_HEIGHT, Colour, ORIGIN, random_f32, Y_UNIT};
 use super::ray::Ray;
 use super::objects::{World};
 use std::time::Instant;

@@ -6,9 +6,6 @@ mod image;
 pub const ASPECT_RATIO : f32 = 16.0 / 9.0;
 pub const IMG_WIDTH : usize = 800;
 pub const IMG_HEIGHT : usize = (IMG_WIDTH as f32 / ASPECT_RATIO) as usize;
-pub const VIEWPORT_HEIGHT : f32 = 2.0;
-pub const VIEWPORT_WIDTH : f32 = ASPECT_RATIO * VIEWPORT_HEIGHT;
-pub const FOCAL_LENGTH : f32 = 1.0;
 pub const BOUNCE_AMOUNT : usize = 10;
 pub const SAMPLES : usize = 100;
 

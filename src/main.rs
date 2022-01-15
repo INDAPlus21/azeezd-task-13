@@ -5,10 +5,14 @@ use std::env;
 
 fn main() {
     let mut args = env::args();
+
+    // Fast preview rendering
     let mut fast = false;
+
     let mut samples = utils::SAMPLES;
     let mut max_bounce = utils::BOUNCE_AMOUNT;
-    let path = args.nth(1).unwrap().to_string();
+
+    let scene_file_path = args.nth(1).unwrap().to_string();
     let mut output_path = "out".to_string();
 
     for arg in args {
@@ -21,7 +25,7 @@ fn main() {
         }
     }
 
-    let mut parser = scene_parser::Parser::new(&path.to_string());
+    let mut parser = scene_parser::Parser::new(&scene_file_path.to_string());
     parser.parse();
 
     if fast {
