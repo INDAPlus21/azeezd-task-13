@@ -1,0 +1,24 @@
+CAM -0.7 1.3 -1  -0.3 1 1   90
+
+MAT base lambertian 0.03 0.03 0.8
+MAT silvery metal 0.8 0.8 0.8 0.7
+MAT goldy metal 0.8 0.7 0 0.5
+MAT bubble dielectric 1.0 1.0 1.0 1.0
+MAT redLight light 10 0 0
+MAT greenLight light 0 100 0
+
+MAT light light 10 10 10
+
+OBJ rect silvery xz 0.1 1.3 1 2 1
+OBJ rect silvery yz 0 1 1 2 1.3
+OBJ rect silvery yz 0 1 1 2 0.1
+OBJ rect silvery xy 0.1 1.3 0 1 1
+
+OBJ rect base xz -10 10 -10 10 0
+OBJ sphere light 0 5 1 2
+
+OBJ sphere bubble -1.5 0.5 1 0.5
+OBJ sphere goldy 1 0.3 0.5 0.3
+
+OBJ sphere redLight 2.5 2 3 0.3
+OBJ sphere greenLight -2.5 2 3 0.5

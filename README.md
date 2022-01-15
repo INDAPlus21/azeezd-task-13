@@ -67,3 +67,5 @@ You can provide random values for the coordinates or colours using the range ope
 | Materials      |  ![materials](/images/materials.png)     | 1000 s/p, 50 bounces       |  9m 33s   |
 | Mirrors | ![mirrors](/images/mirrors.png) | 1000 s/p, 50 bounces | 19m 8s |
 | Spheres | ![spheres](/images/spheres.png) | 1000 s/p, 50 bounces | 5m 16s |
+| Mix of All | ![mixOfAll](/images/mixOfAll.png) | 5000 s/p, 10 bounces | 8m 1s |
+| Strange Refractions | ![refract](/images/strangeRefract.png) | 5000 s/p, 10 bounces | 9m 16s |
