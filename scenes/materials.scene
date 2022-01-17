@@ -8,6 +8,7 @@ MAT blue lambertian 0.2 0.2 0.9
 MAT glass dielectric 0.4 0.4 1.0 1.5
 MAT light light 2 2 2
 
+// Walls and light
 OBJ rect whiteWall xy -1 1 -1 1 1
 OBJ rect whiteWall xy -1 1 -1 1 -1
 OBJ rect lWall yz -1 1 -1 1 1

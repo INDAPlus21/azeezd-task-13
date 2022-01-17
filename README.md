@@ -42,7 +42,7 @@ A `.scene` file is where you can write how the scene should look like by definin
 
 Every command should be on a new line. Whitespace is ignored (put as many tabs, spaces or new lines as you want).
 
-See examples under [scenes](/scenes/) directry. You can see the rendered version under [Example Renders](#example-renders).
+See examples under [scenes](/scenes/) directory. You can see the rendered version under [Example Renders](#example-renders).
 
 ## Commands
 There are 4 commands in total, `CAM`, `MAT`, `OBJ` (split into spheres and rectangle) and `~`
@@ -53,7 +53,7 @@ There are 4 commands in total, `CAM`, `MAT`, `OBJ` (split into spheres and recta
 | `OBJ sphere materialName c1 c2 c3 r`       | Place a sphere whose center is at `c1 c2 c3` with a radius `r`. `materialName` is the name of materials you defined.   |
 | `OBJ rect materialName axis a1 a2 b1 b2 d` | Place an axis aligned rectangle where `axis` is in what axis (`xy`, `xz` or `yz`) the rectangle is aligned with. `a1 a2` is the coordinates of the boundries in the first axis. `b1 b2` is the coordinates of the boundries in the second axis. `d` is the coordinate in the third (orthogonal to the given axis) axis. Example `OBJ rect matName xy -1 1 0.5 1.5 2` would place a rectangle with corners at (-1, 0.5, 2), (-1, 1.5, 2), (1, 0.5, 2) and (1, 1.5, 2). |
 | `~ x`     | Repeats the next command x times |
-| `#`       | Comment the code, should be on a seperate line and add a space after the `#`. |
+| `//`       | Comment the code, should be on a seperate line and add a space after the `//`. |
 ### Random Values
 You can provide random values for the coordinates or colours using the range operator `_`. To gain a random values in the range [x, y], use `x_y` instead of giving a single value
 

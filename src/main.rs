@@ -29,9 +29,11 @@ fn main() {
     parser.parse();
 
     if fast {
+        println!("Fast render of {} started.", scene_file_path);
         parser.camera.fast_render(&mut parser.world, output_path.as_str())
             .expect("Error While Rendering");
     } else {
+        println!("Render of {} started. {} Samples, {} Light Bounces.", scene_file_path, samples, max_bounce);
         parser.camera.render(&mut parser.world, output_path.as_str(), samples, max_bounce)
             .expect("Error While Rendering");
     }
