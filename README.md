@@ -8,6 +8,7 @@ Based on tutorial by Peter Shirley [Ray Tracer in One Weekend](https://raytracin
     - [Commands](#commands)
     - [Materials](#materials)
     - [Random Values](#random-values)
+    - [Preview Render](#preview-render)
 - [Progress](#progress)
 - [Example Renders](#example-renders)
 
@@ -57,6 +58,16 @@ There are 4 commands in total, `CAM`, `MAT`, `OBJ` (split into spheres and recta
 ### Random Values
 You can provide random values for the coordinates or colours using the range operator `_`. To gain a random values in the range [x, y], use `x_y` instead of giving a single value
 
+### Preview Render
+The preview render is a render that colours each object based on a single ray cast that calculates the colour based on the normal of the object it hits.
+This is as stated under [Optional Arguments](#optional-arguments) is when the `-f` argument is passed to the renderer.
+
+Here is an example of the *materials.scene* Scene Render
+
+|Preview using `-f` | Full Ray Casting |
+|---                |---               |
+|![materialsPreview](/images/materials_preview.png)| ![materials](/images/materials.png) |
+
 ## Materials
 | Material  | Image  |
 |-- |-- |
@@ -84,3 +95,4 @@ Here are some example scenes they are rendered on my home device.
 | Spheres | ![spheres](/images/spheres.png) | 3000 s/p, 10 bounces | 14m 5s |
 | Mix of All | ![mixOfAll](/images/mixOfAll.png) | 5000 s/p, 10 bounces | 8m 1s |
 | Strange Refractions | ![refract](/images/strangeRefract.png) | 5000 s/p, 10 bounces | 9m 16s |
+| Mirrors Mirrors| ![moreMirrors](/images/mirrorsMirrors.png) | 1000 s/p, 20 bounces | 9m 22s |

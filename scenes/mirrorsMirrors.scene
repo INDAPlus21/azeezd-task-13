@@ -1,0 +1,19 @@
+CAM     0 0 -1      0 0 1   90
+
+MAT mirror metal 1.0 1.0 1.0 0
+MAT redLight light 10 0 0
+MAT yellowLight light 10 10 0
+MAT blueLight light 0.5 0 10
+MAT glass dielectric 1.0 1.0 1.0 1.5
+
+OBJ rect mirror xy -1 1 -1 1 1
+OBJ rect mirror xy -1 1 -1 1 -1
+OBJ rect mirror yz -1 1 -1 1 1
+OBJ rect mirror yz -1 1 -1 1 -1
+OBJ rect mirror xz -1 1 -1 1 1
+OBJ rect mirror xz -1 1 -1 1 -1
+
+OBJ sphere glass 0 -0.1 1 0.5
+OBJ sphere redLight 0 0.7 1 0.2
+OBJ sphere yellowLight 0.7 -0.6 1 0.2
+OBJ sphere blueLight -0.7 -0.6 1 0.2
